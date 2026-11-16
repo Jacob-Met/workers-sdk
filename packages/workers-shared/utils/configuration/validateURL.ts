@@ -12,7 +12,7 @@ export const extractPathname = (
 	}`;
 };
 
-const URL_REGEX = /^https:\/\/+(?<host>[^/]+)\/?(?<path>.*)/;
+const URL_REGEX = /^https:\/\/+(?<host>[^/?#]+)\/?(?<path>.*)/;
 const HOST_WITH_PORT_REGEX = /.*:\d+$/;
 const PATH_REGEX = /^\//;
 

@@ -141,6 +141,25 @@ test("parseRedirects should preserve querystrings on to", ({ expect }) => {
 	});
 });
 
+test("parseRedirects should preserve queries and fragments on absolute targets without a path", ({
+	expect,
+}) => {
+	const input = `/query https://example.com?utm=1
+/fragment https://example.com#section
+/both https://example.com?utm=1#section
+/port https://example.com:8443?utm=1
+/canonical https://example.com/?utm=1`;
+	const result = parseRedirects(input);
+	expect(result.invalid).toEqual([]);
+	expect(result.rules.map(({ to }) => to)).toEqual([
+		"https://example.com/?utm=1",
+		"https://example.com/#section",
+		"https://example.com/?utm=1#section",
+		"https://example.com:8443/?utm=1",
+		"https://example.com/?utm=1",
+	]);
+});
+
 test("parseRedirects should preserve fragments", ({ expect }) => {
 	const input = `
   /a /b#blah 302
